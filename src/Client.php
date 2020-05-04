@@ -78,6 +78,7 @@ class Client
     public function canThrowException()
     {
         $this->willThrowException = true;
+        return $this;
     }
     
     
