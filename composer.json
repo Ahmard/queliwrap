@@ -3,7 +3,7 @@
     "description": "QueryList PHP web scrapper wrapper.",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "1.0",
     
     "require": {
         "jaeger/querylist": "^4.2"
