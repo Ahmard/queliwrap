@@ -73,8 +73,22 @@ $request->success(function($ql){
 });
 ```
 
+# Exceptions
+By default exceptions are automatically caught,
+if you want throw an exception as soon as it occured, use below method
+```php
+$request->canThrowException()
+    ->get($url)
+    ->success(function(){
+        //code
+    });
+```
+
 # Summary
 ```php
+- get(), post() & postJson()
+returns Queliwrap\Client
+
 - getQL()
 returns QL\QueryListHome
 
@@ -86,6 +100,10 @@ returns bool || QL\QueryListHome
 
 - error()
 returns bool || GuzzleHttp\Exception\TransferException;
+
+- canThrowException()
+returns Queliwrap\Client
+
 ```
 
 # Documentations
