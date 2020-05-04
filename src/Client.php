@@ -20,6 +20,13 @@ class Client
     
     
     /**
+     * if an Exception can be thrown
+     * @var bool
+     */
+    protected $willThrowException = false;
+    
+    
+    /**
      * handle first static call
      * @return Queliwrap\Client
      */
@@ -46,6 +53,13 @@ class Client
      */
     public function request(...$args)
     {
+        //if user wants throw an Exception
+        if($this->willThrowException){
+            $this->result = QueryList::get(...$args);
+            return $this;
+        }
+        
+        //if user don't want Exception to be thrown
         try{
             $this->result = QueryList::get(...$args);
             return $this;
@@ -57,12 +71,26 @@ class Client
     
     
     /**
+     * If you want to throw an Exception
+     * @param void
+     * @return Queliwrap\Client
+     */
+    public function canThrowException()
+    {
+        $this->willThrowException = true;
+    }
+    
+    
+    /**
      * Check wether previous request was success
      * @param void
      * @return bool
      */
-    public function success()
+    public function success($callback=null)
     {
+        if($callback && !$this->error()){
+            return $callback($this->getQL());
+        }
         return empty($this->error);
     }
     
@@ -72,8 +100,11 @@ class Client
      * @param void
      * @return bool
      */
-    public function error()
+    public function error($callback=null)
     {
+        if($callback && !$this->success()){
+            return $callback($this->getError());
+        }
         return (! $this->success());
     }
     
@@ -81,7 +112,7 @@ class Client
     /**
      * Get QueryList instance
      * @param void
-     * @return QL\QueryList
+     * @return QL\QueryListHome
      */
     public function getQL()
     {
