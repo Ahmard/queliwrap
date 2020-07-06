@@ -2,7 +2,16 @@ Queliwrap, PHP QueryList Wrapper.
 ==============================================
 
 Queliwrap is a wrapper that provides easy helper functions
-around PHP popular web scrapper, QueryList library.
+around PHP popular web scrapper, 
+[QueryList](https://github.com/jae-jae/QueryList)
+and [Guzwrap](https://github.com/ahmard/guzwrap).
+
+# Notice
+This library is totally different from version 1.
+There won't be an easy solution for users upgrading from version 1 except rewritting their scripts.
+This happens because we chose to use Guzwrap for making requests which provides much much easier interface for sending requests,
+Guzwrap uses promises as its return value.
+Appologies.
 
 # Installation
 
@@ -32,80 +41,49 @@ After installing, require Composer's autoloader in your code:
 require 'vendor/autoload.php';
 ```
 
+# Note
+We use [Guzwrap](https://github.com/ahmard/guzwrap) in the followimg examples.
+You might want to dig a little deeper in to it.
+
+
 # Usage
 ```php
 use Queliwrap\Client;
 
-$request = Queliwrap::get($url);
-if($request->success()){
-    $ql = $request->getQL();
+Client::request(function($g){
+    $g->get('https://google.com');
+})->then(function($ql){
     $lists = $ql->find('ul')->eq(0)
         ->find('li');
-    .
-    .
-    .
-}else{
-    echo $request->getError()->getMessage();
-}
-```
-or you can directly check if error occured using below syntax
-```php
-if($request->error()){
-    $request->getError()->getMessage();
-}
-```
-
-In favor to those who wants perform simple operations,
-simpler syntax is provided.
-```php
-$request->error(function($error){
-    echo "Error code: {$error->getCode()}<br/>";
-    echo "Message: {$error>getMessage()}";
 });
 ```
-as you probably have it in mind, you can pass closure to success method too
+Handle errors using promise's otherwise method
 ```php
-$request->success(function($ql){
-    $text = $ql->find('ul')->eq(0)
-        ->find('li')->eq(0);
-        ->text();
-    echo $text;
+
+Client::request(function($g){
+    $g->get('https://google.com');
+})
+->then(function($ql){
+    $lists = $ql->find('ul')->eq(0)
+        ->find('li');
+})
+->otherwise(function($e){
+    echo $e->getMessage();
 });
 ```
 
-# Exceptions
-By default exceptions are automatically caught,
-if you want throw an exception as soon as it occured, use below method
+# Submit Form
 ```php
-$request->canThrowException()
-    ->get($url)
-    ->success(function(){
-        //code
+Client::request(function($g){
+    $g->post(function($req){
+        $req->url('http://localhost:8080/rand/guzwrap.php');
+        $req->field('name', 'Jane Doe');
+        $req->file('image', 'C:\1.jpg');
     });
-```
-
-# Summary
-```php
-- get(), post() & postJson()
-returns Queliwrap\Client
-
-- getQL()
-returns QL\QueryListHome
-
-- getError()
-returns GuzzleHttp\Exception\TransferException;
-
-- success()
-returns bool || QL\QueryListHome
-
-- error()
-returns bool || GuzzleHttp\Exception\TransferException;
-
-- canThrowException()
-returns Queliwrap\Client
-
+});
 ```
 
 # Documentations
 - [QueryList](https://github.com/jae-jae/QueryList)
 - [Guzzle](http://guzzlephp.org/)
+- [Guzwrap](http://github.com/ahmard/guzwrap)
