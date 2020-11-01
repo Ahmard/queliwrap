@@ -3,19 +3,13 @@ Queliwrap, PHP QueryList Wrapper.
 
 Queliwrap is a wrapper that provides easy helper functions
 around PHP popular web scrapper, 
-[QueryList](https://github.com/jae-jae/QueryList)
-and [Guzwrap](https://github.com/ahmard/guzwrap).
+[QueryList](https://github.com/jae-jae/QueryList) and 
+[Guzwrap](https://github.com/ahmard/guzwrap).
 
-# Notice
-This library is totally different from version 1.
-There won't be an easy solution for users upgrading from version 1 except rewritting their scripts.
-This happens because we chose to use Guzwrap for making requests which provides much much easier interface for sending requests,
-Guzwrap uses promises as its return value.
-Appologies.
 
-# Installation
+## Installation
 
-Make sure that you have composer installed
+Make sure you have composer installed
 [Composer](http://getcomposer.org).
 
 If you don't have Composer run the below command
@@ -41,49 +35,44 @@ After installing, require Composer's autoloader in your code:
 require 'vendor/autoload.php';
 ```
 
-# Note
-We use [Guzwrap](https://github.com/ahmard/guzwrap) in the followimg examples.
+## Note
+We use [Guzwrap](https://github.com/ahmard/guzwrap) in the following examples.
 You might want to dig a little deeper in to it.
 
 
-# Usage
+## Usage
 ```php
 use Queliwrap\Client;
 
-Client::request(function($g){
-    $g->get('https://google.com');
-})->then(function($ql){
-    $lists = $ql->find('ul')->eq(0)
-        ->find('li');
-});
+Client::get('https://google.com')->exec()
+    ->find('ul')->eq(0)
+    ->find('li');
 ```
 Handle errors using promise's otherwise method
 ```php
-
-Client::request(function($g){
-    $g->get('https://google.com');
-})
-->then(function($ql){
-    $lists = $ql->find('ul')->eq(0)
+use Queliwrap\Client;
+try {
+    Client::get('https://google.com')->exec()
+        ->find('ul')->eq(0)
         ->find('li');
-})
-->otherwise(function($e){
-    echo $e->getMessage();
-});
+}catch (Throwable $exception){
+    echo $exception->getMessage();
+}
 ```
 
-# Submit Form
+### Submit Form
 ```php
-Client::request(function($g){
-    $g->post(function($req){
-        $req->url('http://localhost:8080/rand/guzwrap.php');
-        $req->field('name', 'Jane Doe');
-        $req->file('image', 'C:\1.jpg');
-    });
+use Guzwrap\Core\Post;
+use Queliwrap\Client;
+
+Client::post(function(Post $post){
+    $post->url('http://localhost:8080/rand/guzwrap.php');
+    $post->field('name', 'Jane Doe');
+    $post->file('image', 'C:\1.jpg');
 });
 ```
 
-# Documentations
+## Documentations
 - [QueryList](https://github.com/jae-jae/QueryList)
-- [Guzzle](http://guzzlephp.org/)
 - [Guzwrap](http://github.com/ahmard/guzwrap)
+- [Guzzle](http://guzzlephp.org/)

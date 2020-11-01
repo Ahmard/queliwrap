@@ -7,9 +7,9 @@
     "prefer-stable": true,
     
     "require": {
+        "php": "^7.4",
         "jaeger/querylist": "^4.2",
-        "ahmard/guzwrap": "^1.0",
-        "ahmard/simple-promise": "^1.0"
+        "ahmard/guzwrap": "^1"
     },
     "autoload": {
         "psr-4": {

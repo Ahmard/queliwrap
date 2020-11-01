@@ -1,16 +1,17 @@
 <?php
+
+
 namespace Queliwrap;
 
-use Queliwrap\TheWrapper;
 
+use Queliwrap\Core\RequestMethods;
+
+/**
+ * Client - Bridge between Guzwrap(guzzlehttp) and QueryList
+ * @package Queliwrap
+ */
 class Client
 {
-    public static function __callStatic($method, $args)
-    {
-        if(method_exists(TheWrapper::class, $method)){
-            return (new TheWrapper())->$method(...$args);
-        }
-        
-        throw new Exception("Method TheWrapper::{$method} not found.");
-    }
+    //Import request methods
+    use RequestMethods;
 }
