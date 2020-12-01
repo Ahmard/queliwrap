@@ -7,7 +7,7 @@
     "prefer-stable": true,
     
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|8.0",
         "jaeger/querylist": "^4.2",
         "ahmard/guzwrap": "^1"
     },
