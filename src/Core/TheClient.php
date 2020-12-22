@@ -22,7 +22,7 @@ class TheClient extends GuzzleWrapper
      * @return QueryList|null
      * @throws Throwable
      */
-    public function exec()
+    public function exec(): ?QueryList
     {
         $response = parent::exec();
 

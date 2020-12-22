@@ -9,7 +9,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function get(string $url)
+    public static function get(string $url): TheClient
     {
         return static::request('GET', $url);
     }
@@ -19,7 +19,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function head(string $url)
+    public static function head(string $url): TheClient
     {
         return static::request('HEAD', $url);
     }
@@ -29,7 +29,7 @@ trait RequestMethods
      * @param string|callable $urlOrClosure
      * @return TheClient
      */
-    public static function post($urlOrClosure)
+    public static function post($urlOrClosure): TheClient
     {
         return static::request('POST', $urlOrClosure);
     }
@@ -39,7 +39,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function put(string $url)
+    public static function put(string $url): TheClient
     {
         return static::request('PUT', $url);
     }
@@ -49,7 +49,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function delete(string $url)
+    public static function delete(string $url): TheClient
     {
         return static::request('DELETE', $url);
     }
@@ -59,7 +59,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function connect(string $url)
+    public static function connect(string $url): TheClient
     {
         return static::request('CONNECT', $url);
     }
@@ -69,7 +69,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function options(string $url)
+    public static function options(string $url): TheClient
     {
         return static::request('OPTIONS', $url);
     }
@@ -79,7 +79,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function trace(string $url)
+    public static function trace(string $url): TheClient
     {
         return static::request('TRACE', $url);
     }
@@ -89,7 +89,7 @@ trait RequestMethods
      * @param string $url
      * @return TheClient
      */
-    public static function patch(string $url)
+    public static function patch(string $url): TheClient
     {
         return static::request('PATCH', $url);
     }
@@ -99,7 +99,7 @@ trait RequestMethods
      * @param mixed ...$arguments
      * @return TheClient
      */
-    private static function request(string $type, ...$arguments)
+    protected static function request(string $type, ...$arguments): TheClient
     {
         $parameters = [$type, ...$arguments];
         return (new TheClient())->request(...$parameters);
