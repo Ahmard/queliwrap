@@ -5,6 +5,7 @@ namespace Queliwrap\Core;
 
 
 use Guzwrap\Core\GuzzleWrapper;
+use Psr\Http\Message\ResponseInterface;
 use QL\QueryList;
 use Throwable;
 
@@ -18,11 +19,21 @@ class TheClient extends GuzzleWrapper
     }
 
     /**
-     * Execute request
-     * @return QueryList|null
+     * Execute http request and returns psr-7 compliant object
+     * @return ResponseInterface
      * @throws Throwable
      */
-    public function exec(): ?QueryList
+    public function exec(): ResponseInterface
+    {
+        return parent::exec();
+    }
+
+    /**
+     * Execute http request and returns QueryList object or null
+     * @return ?QueryList
+     * @throws Throwable
+     */
+    public function execute(): ?QueryList
     {
         $response = parent::exec();
 

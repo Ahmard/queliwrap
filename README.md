@@ -6,6 +6,8 @@ around PHP popular web scrapper,
 [QueryList](https://github.com/jae-jae/QueryList) and 
 [Guzwrap](https://github.com/ahmard/guzwrap).
 
+**Notice:** **_Queliwrap\Core\TheClient::exec()_** method has been replaced with **_execute()_**.
+exec() now returns **psr-7** compliant object while execute() returns **QueryList** object
 
 ## Installation
 
@@ -44,7 +46,7 @@ You might want to dig a little deeper in to it.
 ```php
 use Queliwrap\Client;
 
-Client::get('https://google.com')->exec()
+Client::get('https://google.com')->execute()
     ->find('ul')->eq(0)
     ->find('li');
 ```
@@ -52,7 +54,7 @@ Handle errors using promise's otherwise method
 ```php
 use Queliwrap\Client;
 try {
-    Client::get('https://google.com')->exec()
+    Client::get('https://google.com')->execute()
         ->find('ul')->eq(0)
         ->find('li');
 }catch (Throwable $exception){
