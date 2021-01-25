@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Queliwrap\Core;
+namespace Queliwrap\Wrapper;
 
 
-use Guzwrap\Core\GuzzleWrapper;
+use Guzwrap\Wrapper\Guzzle;
 use Psr\Http\Message\ResponseInterface;
 use QL\QueryList;
 use Throwable;
 
-class TheClient extends GuzzleWrapper
+class Queliwrap extends Guzzle
 {
     protected ?QueryList $queryList;
 
@@ -48,7 +48,7 @@ class TheClient extends GuzzleWrapper
         });
 
         //Call our extension
-        $this->queryList->qwHandler();
+        call_user_func([$this->queryList, 'qwHandler']);
 
         return $this->queryList;
     }
