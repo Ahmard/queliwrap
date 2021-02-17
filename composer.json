@@ -9,7 +9,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "jaeger/querylist": "^4.2",
-        "ahmard/guzwrap": "^2.0"
+        "ahmard/guzwrap": "^2.4"
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +24,9 @@
         "psr-4": {
             "Queliwrap\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse"
     }
 }
