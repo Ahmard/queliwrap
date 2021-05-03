@@ -4,6 +4,7 @@
 namespace Queliwrap\Wrapper;
 
 
+use Exception;
 use Guzwrap\Wrapper\Guzzle;
 use Psr\Http\Message\ResponseInterface;
 use QL\QueryList;
@@ -11,11 +12,20 @@ use Throwable;
 
 class Queliwrap extends Guzzle
 {
-    protected ?QueryList $queryList;
+    protected QueryList $queryList;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
-        $this->queryList = QueryList::getInstance();
+        $queryList = QueryList::getInstance();
+
+        if (null == $queryList) {
+            throw new Exception('Failed to create QueryList instance');
+        }
+
+        $this->queryList = $queryList;
     }
 
     /**
@@ -30,10 +40,10 @@ class Queliwrap extends Guzzle
 
     /**
      * Execute http request and returns QueryList object or null
-     * @return ?QueryList
+     * @return QueryList
      * @throws Throwable
      */
-    public function execute(): ?QueryList
+    public function execute(): QueryList
     {
         $response = parent::exec();
 

@@ -15,15 +15,6 @@ use Queliwrap\Wrapper\Queliwrap;
 class Client
 {
     /**
-     * Create an instance of Queliwrap\Wrapper\Queliwrap
-     * @return Queliwrap
-     */
-    public static function create(): Queliwrap
-    {
-        return new Queliwrap();
-    }
-
-    /**
      * Send GET request
      * @param string $url
      * @return Queliwrap
@@ -31,6 +22,17 @@ class Client
     public static function get(string $url): Queliwrap
     {
         return static::request('GET', $url);
+    }
+
+    /**
+     * @param string $type
+     * @param mixed ...$arguments
+     * @return Queliwrap
+     */
+    protected static function request(string $type, ...$arguments): Queliwrap
+    {
+        $parameters = [$type, ...$arguments];
+        return (new Queliwrap())->request(...$parameters);
     }
 
     /**
@@ -51,6 +53,15 @@ class Client
     public static function form($callableOrForm)
     {
         return static::create()->form($callableOrForm);
+    }
+
+    /**
+     * Create an instance of Queliwrap\Wrapper\Queliwrap
+     * @return Queliwrap
+     */
+    public static function create(): Queliwrap
+    {
+        return new Queliwrap();
     }
 
     /**
@@ -121,16 +132,5 @@ class Client
     public static function patch(string $url): Queliwrap
     {
         return static::request('PATCH', $url);
-    }
-
-    /**
-     * @param string $type
-     * @param mixed ...$arguments
-     * @return Queliwrap
-     */
-    protected static function request(string $type, ...$arguments): Queliwrap
-    {
-        $parameters = [$type, ...$arguments];
-        return (new Queliwrap())->request(...$parameters);
     }
 }
